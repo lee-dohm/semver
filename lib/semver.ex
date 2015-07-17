@@ -1,0 +1,2 @@
+defmodule Semver do
+end

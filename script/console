@@ -1,0 +1,4 @@
+#!/bin/sh
+
+script/update
+iex -S mix
