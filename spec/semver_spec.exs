@@ -31,4 +31,14 @@ defmodule SemverSpec do
       expect(Semver.is_valid("1.1.1-alpha.beta+12345.67890")).to eq(true)
     end
   end
+
+  describe "parse" do
+    it "parses a normal version" do
+      expect(Semver.parse("0.0.0")).to eq({:ok, %{major: 0, minor: 0, patch: 0}})
+    end
+
+    it "rejects an invalid version" do
+      expect(Semver.parse("vvv")).to eq({:error, :invalid})
+    end
+  end
 end
