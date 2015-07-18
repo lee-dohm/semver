@@ -40,5 +40,9 @@ defmodule SemverSpec do
     it "rejects an invalid version" do
       expect(Semver.parse("vvv")).to eq({:error, :invalid})
     end
+    #
+    # it "parses a pre-release version" do
+    #   expect(Semver.parse("1.1.1-alpha")).to eq({:ok, %{major: 1, minor: 1, patch: 1, prerelease: ['alpha']}})
+    # end
   end
 end
