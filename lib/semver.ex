@@ -14,21 +14,25 @@ defmodule Semver do
              $
              """x
 
+  @type t :: %Semver{major: integer, minor: integer, patch: integer, prerelease: [String.t], build: [String.t]}
   defstruct major: 0, minor: 0, patch: 0, prerelease: [], build: []
 
   @doc """
   Gets the version string of the module.
   """
+  @spec version() :: String.t
   def version, do: @vsn
 
   @doc """
   Validates that `version` is a valid Semver string.
   """
+  @spec is_valid(String.t) :: boolean
   def is_valid(version), do: version =~ @pattern
 
   @doc """
   Parses `version` into a `Semver` struct.
   """
+  @spec parse(String.t) :: {:ok, t} | {:error, :invalid}
   def parse(version) do
     cond do
       is_valid(version) -> parse_valid(version)
@@ -40,6 +44,7 @@ defmodule Semver do
   Parses a version string into a `Semver` struct. If `version` is not a valid version string, it
   raises `Semver.Error`.
   """
+  @spec parse!(String.t) :: t | no_return
   def parse!(version) do
     case parse(version) do
       {:ok, retval} -> retval
@@ -50,6 +55,7 @@ defmodule Semver do
   @doc """
   Converts a `Semver` struct into a version string.
   """
+  @spec to_string(t) :: String.t
   def to_string(struct) do
     "#{struct.major}.#{struct.minor}.#{struct.patch}"
     |> append_prerelease(struct)
