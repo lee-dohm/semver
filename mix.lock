@@ -1,3 +1,4 @@
-%{"espec": {:hex, :espec, "0.6.3"},
+%{"earmark": {:hex, :earmark, "0.1.17"},
+  "espec": {:hex, :espec, "0.6.3"},
   "ex_doc": {:hex, :ex_doc, "0.7.3"},
   "meck": {:hex, :meck, "0.8.3"}}
