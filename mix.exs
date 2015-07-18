@@ -33,6 +33,7 @@ defmodule Semver.Mixfile do
 
   defp package do
     [
+      description: "Utilities for working with semver.org-compliant version strings",
       files: ~w(lib mix.exs README.md LICENSE.md VERSION CHANGELOG.md),
       licenses: ["MIT"],
       links: %{"GitHub" => @homepage}
