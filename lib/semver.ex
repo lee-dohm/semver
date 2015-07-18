@@ -2,6 +2,7 @@ defmodule Semver do
   @moduledoc """
   Utilities for working with semver-compliant version strings.
   """
+
   @vsn "0.1.0"
   @pattern ~r"""
              ^v?
@@ -12,6 +13,8 @@ defmodule Semver do
              (\+(?<build>[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?
              $
              """x
+
+  defstruct major: 0, minor: 0, patch: 0, prerelease: [], build: []
 
   @doc """
   Module version.
@@ -25,6 +28,9 @@ defmodule Semver do
     version =~ @pattern
   end
 
+  @doc """
+  Parses a version string into a `Semver` structure.
+  """
   def parse(version) do
     cond do
       is_valid(version) -> parse_valid(version)
@@ -32,12 +38,22 @@ defmodule Semver do
     end
   end
 
-  defp parse_valid(version) do
-    [major, minor, patch] = Enum.map String.split(version, ~r/\./), fn(part) ->
-      {num, _} = Integer.parse(part)
-      num
-    end
+  defp correct_list([""]), do: []
+  defp correct_list(list), do: list
 
-    {:ok, %{major: major, minor: minor, patch: patch}}
+  defp extract_integer(text) do
+    {number, _} = Integer.parse(text)
+    number
+  end
+
+  defp parse_valid(version) do
+    parts = Regex.named_captures(@pattern, version)
+    major = extract_integer(parts["major"])
+    minor = extract_integer(parts["minor"])
+    patch = extract_integer(parts["patch"])
+    prerelease = correct_list(String.split(parts["prerelease"], ~r/\./))
+    build = correct_list(String.split(parts["build"], ~r/\./))
+
+    {:ok, %Semver{major: major, minor: minor, patch: patch, prerelease: prerelease, build: build}}
   end
 end

@@ -33,16 +33,45 @@ defmodule SemverSpec do
   end
 
   describe "parse" do
-    it "parses a normal version" do
-      expect(Semver.parse("0.0.0")).to eq({:ok, %{major: 0, minor: 0, patch: 0}})
+    it "rejects an invalid version", do: expect(Semver.parse("vvv")).to eq({:error, :invalid})
+
+    describe "a normal version" do
+      before do
+        {:ok, ver} = Semver.parse("1.2.3")
+        {:ok, ver: ver}
+      end
+
+      it "parses the major version", do: __.ver.major |> should eq 1
+      it "parses the minor version", do: __.ver.minor |> should eq 2
+      it "parses the patch version", do: __.ver.patch |> should eq 3
+      it "gives an empty list for prerelease", do: __.ver.prerelease |> should eq []
+      it "gives an empty list for build", do: __.ver.build |> should eq []
     end
 
-    it "rejects an invalid version" do
-      expect(Semver.parse("vvv")).to eq({:error, :invalid})
+    describe "a version including prerelease components" do
+      before do
+        {:ok, ver} = Semver.parse("1.2.3-alpha.beta")
+        {:ok, ver: ver}
+      end
+
+      it "parses the major version", do: __.ver.major |> should eq 1
+      it "parses the minor version", do: __.ver.minor |> should eq 2
+      it "parses the patch version", do: __.ver.patch |> should eq 3
+      it "gives an empty list for prerelease", do: __.ver.prerelease |> should eq ["alpha", "beta"]
+      it "gives an empty list for build", do: __.ver.build |> should eq []
     end
-    #
-    # it "parses a pre-release version" do
-    #   expect(Semver.parse("1.1.1-alpha")).to eq({:ok, %{major: 1, minor: 1, patch: 1, prerelease: ['alpha']}})
-    # end
+
+    describe "a version including build components" do
+      before do
+        {:ok, ver} = Semver.parse("1.2.3+alpha.beta")
+        {:ok, ver: ver}
+      end
+
+      it "parses the major version", do: __.ver.major |> should eq 1
+      it "parses the minor version", do: __.ver.minor |> should eq 2
+      it "parses the patch version", do: __.ver.patch |> should eq 3
+      it "gives an empty list for prerelease", do: __.ver.prerelease |> should eq []
+      it "gives an empty list for build", do: __.ver.build |> should eq ["alpha", "beta"]
+    end
   end
 end
