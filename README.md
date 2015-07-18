@@ -1,5 +1,9 @@
 # semver
 
+[![Travis](https://img.shields.io/travis/lee-dohm/semver.svg?style=flat)](https://travis-ci.org/lee-dohm/semver)
+[![Hex.pm](https://img.shields.io/hexpm/v/semver.svg?style=flat)](https://hex.pm/packages/semver)
+[![Hex.pm](https://img.shields.io/hexpm/dt/semver.svg?style=flat)](https://hex.pm/packages/semver)
+
 A [semver][semver] library for Elixir.
 
 ## Copyright

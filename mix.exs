@@ -27,7 +27,8 @@ defmodule Semver.Mixfile do
     [
       {:espec, "~> 0.6.3", only: :test},
       {:ex_doc, "~> 0.7", only: :dev},
-      {:earmark, ">= 0.0.0", only: :dev}
+      {:earmark, ">= 0.0.0", only: :dev},
+      {:inch_ex, only: :docs}
     ]
   end
 

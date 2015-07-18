@@ -1,3 +1,6 @@
 language: elixir
 install: script/bootstrap
 script: script/cibuild
+after_script:
+  - MIX_ENV=docs mix deps.get
+  - MIX_ENV=docs mix inch.report
