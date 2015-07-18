@@ -38,6 +38,18 @@ defmodule Semver do
     end
   end
 
+  def to_string(struct) do
+    "#{struct.major}.#{struct.minor}.#{struct.patch}"
+      |> append_prerelease(struct)
+      |> append_build(struct)
+  end
+
+  defp append_build(text, []), do: text
+  defp append_build(text, %{prerelease: list}), do: "#{text}+#{Enum.join(list, ".")}"
+
+  defp append_prerelease(text, []), do: text
+  defp append_prerelease(text, %{build: list}), do: "#{text}-#{Enum.join(list, ".")}"
+
   defp correct_list([""]), do: []
   defp correct_list(list), do: list
 

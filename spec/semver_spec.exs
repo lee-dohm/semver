@@ -37,41 +37,70 @@ defmodule SemverSpec do
 
     describe "a normal version" do
       before do
-        {:ok, ver} = Semver.parse("1.2.3")
-        {:ok, ver: ver}
+        {:ok, version} = Semver.parse("1.2.3")
+        {:ok, version: version}
       end
 
-      it "parses the major version", do: __.ver.major |> should eq 1
-      it "parses the minor version", do: __.ver.minor |> should eq 2
-      it "parses the patch version", do: __.ver.patch |> should eq 3
-      it "gives an empty list for prerelease", do: __.ver.prerelease |> should eq []
-      it "gives an empty list for build", do: __.ver.build |> should eq []
+      let :version, do: __.version
+
+      it "parses the major version", do: version.major |> should eq 1
+      it "parses the minor version", do: version.minor |> should eq 2
+      it "parses the patch version", do: version.patch |> should eq 3
+      it "gives an empty list for prerelease", do: version.prerelease |> should eq []
+      it "gives an empty list for build", do: version.build |> should eq []
     end
 
     describe "a version including prerelease components" do
       before do
-        {:ok, ver} = Semver.parse("1.2.3-alpha.beta")
-        {:ok, ver: ver}
+        {:ok, version} = Semver.parse("1.2.3-alpha.beta")
+        {:ok, version: version}
       end
 
-      it "parses the major version", do: __.ver.major |> should eq 1
-      it "parses the minor version", do: __.ver.minor |> should eq 2
-      it "parses the patch version", do: __.ver.patch |> should eq 3
-      it "gives an empty list for prerelease", do: __.ver.prerelease |> should eq ["alpha", "beta"]
-      it "gives an empty list for build", do: __.ver.build |> should eq []
+      let :version, do: __.version
+
+      it "parses the major version", do: version.major |> should eq 1
+      it "parses the minor version", do: version.minor |> should eq 2
+      it "parses the patch version", do: version.patch |> should eq 3
+      it "gives an empty list for prerelease", do: version.prerelease |> should eq ["alpha", "beta"]
+      it "gives an empty list for build", do: version.build |> should eq []
     end
 
     describe "a version including build components" do
       before do
-        {:ok, ver} = Semver.parse("1.2.3+alpha.beta")
-        {:ok, ver: ver}
+        {:ok, version} = Semver.parse("1.2.3+alpha.beta")
+        {:ok, version: version}
       end
 
-      it "parses the major version", do: __.ver.major |> should eq 1
-      it "parses the minor version", do: __.ver.minor |> should eq 2
-      it "parses the patch version", do: __.ver.patch |> should eq 3
-      it "gives an empty list for prerelease", do: __.ver.prerelease |> should eq []
-      it "gives an empty list for build", do: __.ver.build |> should eq ["alpha", "beta"]
+      let :version, do: __.version
+
+      it "parses the major version", do: version.major |> should eq 1
+      it "parses the minor version", do: version.minor |> should eq 2
+      it "parses the patch version", do: version.patch |> should eq 3
+      it "gives an empty list for prerelease", do: version.prerelease |> should eq []
+      it "gives an empty list for build", do: version.build |> should eq ["alpha", "beta"]
+    end
+
+    describe "a version containing both prerelease and build components" do
+      before do
+        {:ok, version} = Semver.parse("1.2.3-alpha.beta+alpha.beta")
+        {:ok, version: version}
+      end
+
+      let :version, do: __.version
+
+      it "parses the major version", do: version.major |> should eq 1
+      it "parses the minor version", do: version.minor |> should eq 2
+      it "parses the patch version", do: version.patch |> should eq 3
+      it "gives an empty list for prerelease", do: version.prerelease |> should eq ["alpha", "beta"]
+      it "gives an empty list for build", do: version.build |> should eq ["alpha", "beta"]
+    end
+  end
+
+  describe "to_string" do
+    let :version, do: %{major: 1, minor: 2, patch: 3, prerelease: ["alpha", "beta"], build: ["alpha", "beta"]}
+
+    it "converts a Semver struct into a string" do
+      expect(Semver.to_string(version)).to eq("1.2.3-alpha.beta+alpha.beta")
     end
   end
 end
