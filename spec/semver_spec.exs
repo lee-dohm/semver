@@ -2,7 +2,7 @@ defmodule SemverSpec do
   use ESpec
 
   describe "version" do
-    it "matches the expected version", do: expect(Semver.version()).to eq(File.read!("VERSION") |> String.strip)
+    it "matches the expected version", do: expect(Semver.version).to eq(File.read!("VERSION") |> String.strip)
   end
 
   describe "is_valid" do
