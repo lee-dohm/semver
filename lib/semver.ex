@@ -29,7 +29,7 @@ defmodule Semver do
   end
 
   @doc """
-  Parses a version string into a `Semver` structure.
+  Parses a version string into a `Semver` struct.
   """
   def parse(version) do
     cond do
@@ -38,10 +38,13 @@ defmodule Semver do
     end
   end
 
+  @doc """
+  Converts a `Semver` struct into a version string.
+  """
   def to_string(struct) do
     "#{struct.major}.#{struct.minor}.#{struct.patch}"
-      |> append_prerelease(struct)
-      |> append_build(struct)
+    |> append_prerelease(struct)
+    |> append_build(struct)
   end
 
   defp append_build(text, []), do: text
