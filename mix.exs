@@ -2,13 +2,15 @@ defmodule Semver.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :semver,
-     version: "0.1.0",
-     elixir: "~> 1.0",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     preferred_cli_env: [espec: :test],
-     deps: deps]
+    [
+      app: :semver,
+      version: "0.1.0",
+      elixir: "~> 1.0",
+      build_embedded: Mix.env == :prod,
+      start_permanent: Mix.env == :prod,
+      preferred_cli_env: [espec: :test],
+      deps: deps
+    ]
   end
 
   # Configuration for the OTP application
@@ -28,6 +30,9 @@ defmodule Semver.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:espec, "~> 0.6.3", only: :test}]
+    [
+      {:espec, "~> 0.6.3", only: :test},
+      {:ex_doc, "~> 0.7", only: :dev}
+    ]
   end
 end
