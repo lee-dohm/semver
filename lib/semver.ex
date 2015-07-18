@@ -3,7 +3,7 @@ defmodule Semver do
   Utilities for working with [Semver-compliant](http://semver.org) version strings.
   """
 
-  @vsn "0.1.0"
+  @vsn File.read!("VERSION") |> String.strip
   @pattern ~r"""
              ^v?
              (?<major>0|[1-9]\d*)\.

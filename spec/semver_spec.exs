@@ -1,6 +1,10 @@
 defmodule SemverSpec do
   use ESpec
 
+  describe "version" do
+    it "matches the expected version", do: expect(Semver.version()).to eq(File.read!("VERSION") |> String.strip)
+  end
+
   describe "is_valid" do
     it "accepts a standard version number", do: expect(Semver.is_valid("1.1.1")).to eq(true)
     it "accepts a version with leading v", do: expect(Semver.is_valid("v1.1.1")).to eq(true)
