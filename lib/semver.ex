@@ -56,10 +56,10 @@ defmodule Semver do
   Converts a `Semver` struct into a version string.
   """
   @spec to_string(t) :: String.t
-  def to_string(struct) do
-    "#{struct.major}.#{struct.minor}.#{struct.patch}"
-    |> append_prerelease(struct)
-    |> append_build(struct)
+  def to_string(semver) do
+    "#{semver.major}.#{semver.minor}.#{semver.patch}"
+    |> append_prerelease(semver)
+    |> append_build(semver)
   end
 
   defp append_build(text, []), do: text
