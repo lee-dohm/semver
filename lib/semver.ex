@@ -2,6 +2,12 @@ defmodule Semver do
   @moduledoc """
   Utilities for working with semver-compliant version strings.
   """
+  @vsn "0.1.0"
+
+  @doc """
+  Module version.
+  """
+  def version, do: @vsn
 
   @doc """
   Validates a version string.
