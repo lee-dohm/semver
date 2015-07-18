@@ -1,6 +1,6 @@
 defmodule Semver do
   @moduledoc """
-  Utilities for working with semver-compliant version strings.
+  Utilities for working with [Semver-compliant](http://semver.org) version strings.
   """
 
   @vsn "0.1.0"
@@ -22,19 +22,30 @@ defmodule Semver do
   def version, do: @vsn
 
   @doc """
-  Validates a version string.
+  Validates that `version` is a valid Semver string.
   """
   def is_valid(version) do
     version =~ @pattern
   end
 
   @doc """
-  Parses a version string into a `Semver` struct.
+  Parses `version` into a `Semver` struct.
   """
   def parse(version) do
     cond do
       is_valid(version) -> parse_valid(version)
       true -> {:error, :invalid}
+    end
+  end
+
+  @doc """
+  Parses a version string into a `Semver` struct. If `version` is not a valid version string, it
+  raises `Semver.Error`.
+  """
+  def parse!(version) do
+    case parse(version) do
+      {:ok, retval} -> retval
+      {:error, :invalid} -> raise Semver.Error, message: "Invalid version text: #{version}"
     end
   end
 

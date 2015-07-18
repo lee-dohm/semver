@@ -96,6 +96,26 @@ defmodule SemverSpec do
     end
   end
 
+  describe "parse!" do
+    it "raises an error when the version is invalid" do
+      expect(fn -> Semver.parse!("vvv") end).to raise_exception(Semver.Error)
+    end
+
+    describe "a valid version" do
+      before do
+        {:ok, version: Semver.parse!("1.2.3")}
+      end
+
+      let :version, do: __.version
+
+      it "parses the major version", do: version.major |> should eq 1
+      it "parses the minor version", do: version.minor |> should eq 2
+      it "parses the patch version", do: version.patch |> should eq 3
+      it "gives an empty list for prerelease", do: version.prerelease |> should eq []
+      it "gives an empty list for build", do: version.build |> should eq []
+    end
+  end
+
   describe "to_string" do
     let :version, do: %{major: 1, minor: 2, patch: 3, prerelease: ["alpha", "beta"], build: ["alpha", "beta"]}
 

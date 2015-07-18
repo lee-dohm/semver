@@ -1,0 +1,5 @@
+#!/bin/sh
+
+mix compile
+../ex_doc/bin/ex_doc "Semver" "0.1.0" _build/dev/lib/semver/ebin -u "https://github.com/lee-dohm/semver"
+open doc/index.html
