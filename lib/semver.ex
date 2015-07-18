@@ -17,7 +17,7 @@ defmodule Semver do
   defstruct major: 0, minor: 0, patch: 0, prerelease: [], build: []
 
   @doc """
-  Module version.
+  Gets the version string of the module.
   """
   def version, do: @vsn
 
