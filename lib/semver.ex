@@ -53,7 +53,7 @@ defmodule Semver do
   end
 
   @doc """
-  Converts a `Semver` struct into a version string.
+  Converts the `semver` struct into a version string.
   """
   @spec to_string(t) :: String.t
   def to_string(semver) do
