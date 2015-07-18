@@ -24,9 +24,7 @@ defmodule Semver do
   @doc """
   Validates that `version` is a valid Semver string.
   """
-  def is_valid(version) do
-    version =~ @pattern
-  end
+  def is_valid(version), do: version =~ @pattern
 
   @doc """
   Parses `version` into a `Semver` struct.
