@@ -1,6 +1,6 @@
 defmodule Semver do
   @moduledoc """
-  Utilities for working with [Semver-compliant](http://semver.org) version strings.
+  Utilities for working with [semver.org](https://semver.org)-compliant version strings.
   """
 
   @vsn File.read!("VERSION") |> String.strip
