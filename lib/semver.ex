@@ -23,6 +23,11 @@ defmodule Semver do
   @spec version() :: String.t
   def version, do: @vsn
 
+  @doc """
+  Increment the named `part` of `version`.
+  """
+  @spec increment(String.t, atom) :: String.t
+  @spec increment(t, atom) :: t
   def increment(version, part) when is_binary(version) do
     version
     |> Semver.parse!
@@ -30,16 +35,16 @@ defmodule Semver do
     |> Semver.to_string
   end
 
-  def increment(semver, :major) do
-    %Semver{semver | major: semver.major + 1, minor: 0, patch: 0, prerelease: [], build: []}
+  def increment(version, :major) do
+    %Semver{version | major: version.major + 1, minor: 0, patch: 0, prerelease: [], build: []}
   end
 
-  def increment(semver, :minor) do
-    %Semver{semver | minor: semver.minor + 1, patch: 0, prerelease: [], build: []}
+  def increment(version, :minor) do
+    %Semver{version | minor: version.minor + 1, patch: 0, prerelease: [], build: []}
   end
 
-  def increment(semver, :patch) do
-    %Semver{semver | patch: semver.patch + 1, prerelease: [], build: []}
+  def increment(version, :patch) do
+    %Semver{version | patch: version.patch + 1, prerelease: [], build: []}
   end
 
   @doc """
@@ -72,13 +77,13 @@ defmodule Semver do
   end
 
   @doc """
-  Converts the `semver` struct into a version string.
+  Converts the `version` struct into a version string.
   """
   @spec to_string(t) :: String.t
-  def to_string(semver) do
-    "#{semver.major}.#{semver.minor}.#{semver.patch}"
-    |> append_prerelease(semver)
-    |> append_build(semver)
+  def to_string(version) do
+    "#{version.major}.#{version.minor}.#{version.patch}"
+    |> append_prerelease(version)
+    |> append_build(version)
   end
 
   defp append_build(text, %{build: []}), do: text
