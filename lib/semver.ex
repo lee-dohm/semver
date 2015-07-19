@@ -24,7 +24,10 @@ defmodule Semver do
   def version, do: @vsn
 
   def increment(version, part) when is_binary(version) do
-    Semver.to_string(Semver.increment(Semver.parse!(version), part))
+    version
+    |> Semver.parse!
+    |> Semver.increment(part)
+    |> Semver.to_string
   end
 
   def increment(semver, :major) do
