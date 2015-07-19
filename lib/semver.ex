@@ -32,12 +32,14 @@ defmodule Semver do
   * `:minor` &mdash; Increments the minor version and resets patch to zero
   * `:major` &mdash; Increments the major version and resets the minor and patch versions to zero
 
-  No matter which part is selected, prerelease and build parts will be reset to empty lists.
+  No matter which part is selected, prerelease and build parts will be emptied.
 
   ## Examples
 
       iex> Semver.increment("1.2.3", :minor)
       "1.3.0"
+      iex> Semver.increment("1.2.3-alpha", :major)
+      "2.0.0"
   """
   @spec increment(String.t, atom) :: String.t
   @spec increment(t, atom) :: t
