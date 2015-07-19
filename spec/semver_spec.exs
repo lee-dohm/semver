@@ -5,6 +5,56 @@ defmodule SemverSpec do
     it "matches the expected version", do: expect(Semver.version).to eq(File.read!("VERSION") |> String.strip)
   end
 
+  describe "increment" do
+    describe "version structures" do
+      let :version, do: %Semver{major: 1, minor: 2, patch: 3}
+
+      it "increments the patch version" do
+        expect(Semver.increment(version, :patch)).to eq(%Semver{major: 1, minor: 2, patch: 4})
+      end
+
+      it "increments the minor version" do
+        expect(Semver.increment(version, :minor)).to eq(%Semver{major: 1, minor: 3, patch: 0})
+      end
+
+      it "increments the major version" do
+        expect(Semver.increment(version, :major)).to eq(%Semver{major: 2, minor: 0, patch: 0})
+      end
+
+      describe "with prerelease components" do
+        let :version, do: %Semver{major: 1, minor: 2, patch: 3, prerelease: ["alpha"]}
+
+        it "wipes the prerelease on patch increment" do
+          expect(Semver.increment(version, :patch)).to eq(%Semver{major: 1, minor: 2, patch: 4})
+        end
+
+        it "wipes the prerelease on minor increment" do
+          expect(Semver.increment(version, :minor)).to eq(%Semver{major: 1, minor: 3, patch: 0})
+        end
+
+        it "wipes the prerelease on major increment" do
+          expect(Semver.increment(version, :major)).to eq(%Semver{major: 2, minor: 0, patch: 0})
+        end
+      end
+
+      describe "with build components" do
+        let :version, do: %Semver{major: 1, minor: 2, patch: 3, build: ["alpha"]}
+
+        it "wipes the build on patch increment" do
+          expect(Semver.increment(version, :patch)).to eq(%Semver{major: 1, minor: 2, patch: 4})
+        end
+
+        it "wipes the build on minor increment" do
+          expect(Semver.increment(version, :minor)).to eq(%Semver{major: 1, minor: 3, patch: 0})
+        end
+
+        it "wipes the build on major increment" do
+          expect(Semver.increment(version, :major)).to eq(%Semver{major: 2, minor: 0, patch: 0})
+        end
+      end
+    end
+  end
+
   describe "is_valid" do
     it "accepts a standard version number", do: expect(Semver.is_valid("1.1.1")).to eq(true)
     it "accepts a version with leading v", do: expect(Semver.is_valid("v1.1.1")).to eq(true)

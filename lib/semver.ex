@@ -23,6 +23,18 @@ defmodule Semver do
   @spec version() :: String.t
   def version, do: @vsn
 
+  def increment(semver, :major) do
+    %Semver{semver | major: semver.major + 1, minor: 0, patch: 0, prerelease: [], build: []}
+  end
+
+  def increment(semver, :minor) do
+    %Semver{semver | minor: semver.minor + 1, patch: 0, prerelease: [], build: []}
+  end
+
+  def increment(semver, :patch) do
+    %Semver{semver | patch: semver.patch + 1, prerelease: [], build: []}
+  end
+
   @doc """
   Validates that `version` is a valid Semver string.
   """
