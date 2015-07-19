@@ -121,10 +121,18 @@ defmodule SemverSpec do
   end
 
   describe "to_string" do
-    let :version, do: %{major: 1, minor: 2, patch: 3, prerelease: ["alpha", "beta"], build: ["12", "345"]}
+    describe "bare version" do
+      let :version, do: %Semver{major: 1, minor: 2, patch: 3}
 
-    it "converts a Semver struct into a string" do
-      expect(Semver.to_string(version)).to eq("1.2.3-alpha.beta+12.345")
+      it "converts it to a string", do: expect(Semver.to_string(version)).to eq("1.2.3")
+    end
+
+    describe "a complex version" do
+      let :version, do: %{major: 1, minor: 2, patch: 3, prerelease: ["alpha", "beta"], build: ["12", "345"]}
+
+      it "converts a Semver struct into a string" do
+        expect(Semver.to_string(version)).to eq("1.2.3-alpha.beta+12.345")
+      end
     end
   end
 end

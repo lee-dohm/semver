@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## **v0.1.2** &mdash; *Released: 18 July 2015*
+
+* :bug: Fix for formatting of simple version strings
+
 ## **v0.1.1** &mdash; *Released: 18 July 2015*
 
 * :bug: Fix for swapped build and prerelease parts

@@ -62,10 +62,10 @@ defmodule Semver do
     |> append_build(semver)
   end
 
-  defp append_build(text, []), do: text
+  defp append_build(text, %{build: []}), do: text
   defp append_build(text, %{build: list}), do: "#{text}+#{Enum.join(list, ".")}"
 
-  defp append_prerelease(text, []), do: text
+  defp append_prerelease(text, %{prerelease: []}), do: text
   defp append_prerelease(text, %{prerelease: list}), do: "#{text}-#{Enum.join(list, ".")}"
 
   defp correct_list([""]), do: []
