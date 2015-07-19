@@ -53,6 +53,54 @@ defmodule SemverSpec do
         end
       end
     end
+
+    describe "version strings" do
+      let :version, do: "1.2.3"
+
+      it "increments the patch version" do
+        expect(Semver.increment(version, :patch)).to eq("1.2.4")
+      end
+
+      it "increments the minor version" do
+        expect(Semver.increment(version, :minor)).to eq("1.3.0")
+      end
+
+      it "increments the major version" do
+        expect(Semver.increment(version, :major)).to eq("2.0.0")
+      end
+
+      describe "with prerelease components" do
+        let :version, do: "1.2.3-alpha"
+
+        it "wipes the prerelease on patch increment" do
+          expect(Semver.increment(version, :patch)).to eq("1.2.4")
+        end
+
+        it "wipes the prerelease on minor increment" do
+          expect(Semver.increment(version, :minor)).to eq("1.3.0")
+        end
+
+        it "wipes the prerelease on major increment" do
+          expect(Semver.increment(version, :major)).to eq("2.0.0")
+        end
+      end
+
+      describe "with build components" do
+        let :version, do: "1.2.3+alpha"
+
+        it "wipes the build on patch increment" do
+          expect(Semver.increment(version, :patch)).to eq("1.2.4")
+        end
+
+        it "wipes the build on minor increment" do
+          expect(Semver.increment(version, :minor)).to eq("1.3.0")
+        end
+
+        it "wipes the build on major increment" do
+          expect(Semver.increment(version, :major)).to eq("2.0.0")
+        end
+      end
+    end
   end
 
   describe "is_valid" do

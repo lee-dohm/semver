@@ -23,6 +23,10 @@ defmodule Semver do
   @spec version() :: String.t
   def version, do: @vsn
 
+  def increment(version, part) when is_binary(version) do
+    Semver.to_string(Semver.increment(Semver.parse!(version), part))
+  end
+
   def increment(semver, :major) do
     %Semver{semver | major: semver.major + 1, minor: 0, patch: 0, prerelease: [], build: []}
   end
