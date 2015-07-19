@@ -25,6 +25,19 @@ defmodule Semver do
 
   @doc """
   Increment the named `part` of `version`.
+
+  Options for `part` are:
+
+  * `:patch` &mdash; Increments the patch version
+  * `:minor` &mdash; Increments the minor version and resets patch to zero
+  * `:major` &mdash; Increments the major version and resets the minor and patch versions to zero
+
+  No matter which part is selected, prerelease and build parts will be reset to empty lists.
+
+  ## Examples
+
+      iex> Semver.increment("1.2.3", :minor)
+      "1.3.0"
   """
   @spec increment(String.t, atom) :: String.t
   @spec increment(t, atom) :: t
